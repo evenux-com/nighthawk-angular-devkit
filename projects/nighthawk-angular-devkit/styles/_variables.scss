@@ -61,11 +61,11 @@
   // General
   --form-control-border-width: 1px;
   --form-control-border-radius: 8px;
-  --lg-form-control-x-padding: 14px;
+  --lg-form-control-x-padding: 20px;
   --lg-form-control-y-padding: 18px;
-  --md-form-control-x-padding: 14px;
+  --md-form-control-x-padding: 16px;
   --md-form-control-y-padding: 14px;
-  --sm-form-control-x-padding: 14px;
+  --sm-form-control-x-padding: 12px;
   --sm-form-control-y-padding: 8px;
 
   // Text
@@ -103,7 +103,7 @@
   --black-form-control-border-color: #000000;
   --white-form-control-border-color: #000000;
 
-  // -------------------- CHECKBOX -------------------- //
+  // ------------------ CHECKBOX -------------------- //
 
   --checkbox-background-color: #cccccc;
   --checkbox-checked-background-color: #0062ff;
@@ -117,6 +117,13 @@
   --radio-inner-background-color: #0062ff;
   --radio-border-color: #0062ff;
 
+  // -------------------- SELECT- -------------------- //
+
+  --dropdown-options-background-color: #ffffff;
+  --dropdown-options-text-color: #000000;
+  --dropdown-options-hover-background-color: #cccccc;
+  --dropdown-options-hover-text-color: #000000;
+
   // -------------------- DROPDOWN -------------------- //
 
   --dropdown-background-color: #ffffff;
@@ -127,14 +134,14 @@
   // -------------------- DIALOG -------------------- //
 
   --dialog-shadow-color: #00000026;
-  --dialog-background-color: #222a37;
-  --dialog-border-color: #2a3341;
+  --dialog-background-color: #ffffff;
+  --dialog-border-color: #000000;
 
   // ----------------- RANGE SLIDER ----------------- //
 
   --range-slider-main-color: #0062ff;
   --range-slider-value-active-color: #ffffff;
-  --range-slider-progress-background: #ffffff;
+  --range-slider-progress-background: #cccccc;
   --range-slider-thumb-color: #ffffff;
   --range-slider-ticks-color: #cccccc;
 
@@ -142,7 +149,7 @@
 
   --range-picker-main-color: #0062ff;
   --range-picker-value-active-color: #ffffff;
-  --range-picker-progress-background: #ffffff;
+  --range-picker-progress-background: #cccccc;
   --range-picker-thumb-color: #ffffff;
   --range-picker-ticks-color: #cccccc;
 

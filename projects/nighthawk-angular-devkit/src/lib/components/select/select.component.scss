@@ -7,22 +7,16 @@
 
   &:hover {
     cursor: pointer;
-
-    .form-control {
-      border-color: var(--primary-color);
-    }
   }
 
   &.expanded .form-control {
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;
-    border-color: var(--black-color);
   }
 
   .form-control {
     padding-right: 32px;
     transition: none;
-    color: var(--white-color);
   }
 
   i {
@@ -70,20 +64,20 @@
   border: var(--form-control-border-width) solid var(--black-color);
   border-bottom-left-radius: 6px;
   border-bottom-right-radius: 6px;
-  background-color: var(--background-color);
+  background-color: var(--dropdown-options-background-color);
   border-top: none;
 
   a,
   button {
     padding: 12px;
-    color: var(--text-color);
+    color: var(--dropdown-options-text-color);
     cursor: pointer;
     font-size: 13px;
     text-decoration: none;
 
     &:hover {
-      background-color: var(--primary-color);
-      color: var(--white-color);
+      background-color: var(--dropdown-options-hover-background-color);
+      color: var(--dropdown-options-hover-text-color);
       font-weight: bolder;
     }
 
@@ -94,6 +88,5 @@
 
   p {
     padding: 12px;
-    color: var(--white-color);
   }
 }
