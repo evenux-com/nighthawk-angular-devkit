@@ -1,0 +1,50 @@
+<div cdkOverlayOrigin #trigger #origin="cdkOverlayOrigin">
+  <div class="input-wrapper" [ngClass]="size" [class.expanded]="showingOptions">
+    <input
+      nighthawk-form-control
+      [color]="color"
+      [size]="size"
+      [disabled]="isDisabled"
+      [ngModel]="selectedValue"
+      [placeholder]="
+        hasSearch
+          ? showingOptions
+            ? searchPlaceholder
+            : placeholder || ''
+          : placeholder
+      "
+      (ngModelChange)="onModelChange($event)"
+      (input)="onSearch($event)"
+      (focus)="showOptions()"
+      (blur)="onBlur()"
+      (keydown.enter)="selectOption()"
+    />
+    <i class="icon-down-dir"></i>
+    <div
+      class="click-overlay"
+      [class.is-disabled]="isDisabled"
+      [class.has-search]="hasSearch"
+      (click)="toggleDropdown()"
+    ></div>
+  </div>
+</div>
+
+<ng-template
+  cdkConnectedOverlay
+  cdkConnectedOverlayHasBackdrop
+  cdkConnectedOverlayBackdropClass="cdk-overlay-transparent-backdrop"
+  [cdkConnectedOverlayWidth]="parentWidth"
+  [cdkConnectedOverlayOrigin]="origin"
+  [cdkConnectedOverlayOpen]="showingOptions"
+  (backdropClick)="hideOptions(true)"
+>
+  <div class="dropdown-options">
+    @for (option of filteredOptions; track option) {
+    <a (click)="selectOption(option)" [class.disabled]="option.disabled">
+      {{ option[nameField] }}
+    </a>
+    } @if (!filteredOptions || !filteredOptions.length) {
+    <p>No results found...</p>
+    }
+  </div>
+</ng-template>

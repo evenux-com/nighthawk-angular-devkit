@@ -1,0 +1,8 @@
+.dropdown-content {
+  background-color: var(--dropdown-background-color);
+  border-radius: var(--dropdown-border-radius);
+  overflow: hidden;
+  min-width: 140px;
+  padding: 20px;
+  border: var(--dropdown-border-width) solid var(--dropdown-border-color);
+}

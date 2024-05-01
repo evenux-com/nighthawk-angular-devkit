@@ -1,0 +1,40 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "nighthawk-angular-devkit": {
+      "projectType": "library",
+      "root": "projects/nighthawk-angular-devkit",
+      "sourceRoot": "projects/nighthawk-angular-devkit/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/nighthawk-angular-devkit/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/nighthawk-angular-devkit/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/nighthawk-angular-devkit/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "tsConfig": "projects/nighthawk-angular-devkit/tsconfig.spec.json",
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

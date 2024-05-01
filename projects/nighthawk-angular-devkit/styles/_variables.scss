@@ -1,0 +1,158 @@
+:root {
+  // -------------------- GENERAL -------------------- //
+
+  // General
+  --font-family: "Cutive Mono", monospace;
+  --font-size: 14px;
+  --minimum-page-loading-time: 2000;
+  --minimum-route-switch-loading-time: 3000;
+  --loader-color: #000000;
+  --background-color: #f1f1f1;
+  --text-color: #000000;
+  --background-image: url("/assets/images/default-background.jpg"),
+    url("/nighthawk-angular-devkit/assets/images/default-background.jpg");
+
+  // Breakpoints
+  --mobile-max-width: 576px;
+  --desktop-max-width: 1320px;
+  --container-padding: 20px;
+
+  // Colors
+  --primary-color: #0062ff;
+  --secondary-color: #8400ff;
+  --black-color: #151921;
+  --white-color: #ffffff;
+
+  // -------------------- BUTTONS -------------------- //
+
+  // General
+  --button-border-width: 1px;
+  --button-border-radius: 8px;
+  --lg-button-x-padding: 36px;
+  --lg-button-y-padding: 18px;
+  --md-button-x-padding: 24px;
+  --md-button-y-padding: 14px;
+  --sm-button-x-padding: 12px;
+  --sm-button-y-padding: 8px;
+
+  // Text
+  --transparent-button-text-color: #000000;
+  --primary-button-text-color: #ffffff;
+  --secondary-button-text-color: #ffffff;
+  --black-button-text-color: #ffffff;
+  --white-button-text-color: #000000;
+
+  // Hover event
+  --transparent-button-background-event-color: transparent;
+  --primary-button-background-event-color: #88b6ff;
+  --secondary-button-background-event-color: #b76bff;
+  --black-button-background-event-color: #4d4d4d;
+  --white-button-background-event-color: #c4c4c4;
+
+  // Border color
+  --transparent-button-border-color: #c4c4c4;
+  --primary-button-border-color: #002663;
+  --secondary-button-border-color: #340064;
+  --black-button-border-color: #525252;
+  --white-button-border-color: #c4c4c4;
+
+  // -------------------- FORM CONTROL -------------------- //
+
+  // General
+  --form-control-border-width: 1px;
+  --form-control-border-radius: 8px;
+  --lg-form-control-x-padding: 14px;
+  --lg-form-control-y-padding: 18px;
+  --md-form-control-x-padding: 14px;
+  --md-form-control-y-padding: 14px;
+  --sm-form-control-x-padding: 14px;
+  --sm-form-control-y-padding: 8px;
+
+  // Text
+  --transparent-form-control-text-color: #000000;
+  --primary-form-control-text-color: #ffffff;
+  --secondary-form-control-text-color: #ffffff;
+  --black-form-control-text-color: #ffffff;
+  --white-form-control-text-color: #000000;
+
+  // Placeholders
+  --transparent-form-control-placeholder-color: #000000;
+  --primary-form-control-placeholder-color: #ffffff;
+  --secondary-form-control-placeholder-color: #ffffff;
+  --black-form-control-placeholder-color: #ffffff;
+  --white-form-control-placeholder-color: #000000;
+
+  // Background
+  --transparent-form-control-background-color: transparent;
+  --primary-form-control-background-color: #0062ff;
+  --secondary-form-control-background-color: #8400ff;
+  --black-form-control-background-color: #000000;
+  --white-form-control-background-color: #ffffff;
+
+  // Hover/ focus event
+  --transparent-form-control-background-event-color: transparent;
+  --primary-form-control-background-event-color: #88b6ff;
+  --secondary-form-control-background-event-color: #b76bff;
+  --black-form-control-background-event-color: #4d4d4d;
+  --white-form-control-background-event-color: #c4c4c4;
+
+  // Border color
+  --transparent-form-control-border-color: #000000;
+  --primary-form-control-border-color: #000000;
+  --secondary-form-control-border-color: #000000;
+  --black-form-control-border-color: #000000;
+  --white-form-control-border-color: #000000;
+
+  // -------------------- CHECKBOX -------------------- //
+
+  --checkbox-background-color: #cccccc;
+  --checkbox-checked-background-color: #0062ff;
+  --checkbox-checkmark-color: #ffffff;
+  --checkbox-border-color: #0062ff;
+
+  // -------------------- RADIOS -------------------- //
+
+  --radio-background-color: #cccccc;
+  --radio-inset-background-color: #cccccc;
+  --radio-inner-background-color: #0062ff;
+  --radio-border-color: #0062ff;
+
+  // -------------------- DROPDOWN -------------------- //
+
+  --dropdown-background-color: #ffffff;
+  --dropdown-border-color: #cccccc;
+  --dropdown-border-width: 1px;
+  --dropdown-border-radius: 14px;
+
+  // -------------------- DIALOG -------------------- //
+
+  --dialog-shadow-color: #00000026;
+  --dialog-background-color: #222a37;
+  --dialog-border-color: #2a3341;
+
+  // ----------------- RANGE SLIDER ----------------- //
+
+  --range-slider-main-color: #0062ff;
+  --range-slider-value-active-color: #ffffff;
+  --range-slider-progress-background: #ffffff;
+  --range-slider-thumb-color: #ffffff;
+  --range-slider-ticks-color: #cccccc;
+
+  // ----------------- RANGE PICKER ----------------- //
+
+  --range-picker-main-color: #0062ff;
+  --range-picker-value-active-color: #ffffff;
+  --range-picker-progress-background: #ffffff;
+  --range-picker-thumb-color: #ffffff;
+  --range-picker-ticks-color: #cccccc;
+
+  // ------------------- CALENDAR ------------------- //
+
+  --calendar-header-background-color: #0062ff;
+  --calendar-header-text-color: #ffffff;
+  --calendar-day-item-border-color: #cccccc;
+  --calendar-day-item-background-color: #f1f1f1;
+  --calendary-day-item-hover-background-color: #0062ff;
+  --calendar-day-item-number-text-color: #000000;
+  --calendar-day-item-hover-number-text-color: #ffffff;
+}

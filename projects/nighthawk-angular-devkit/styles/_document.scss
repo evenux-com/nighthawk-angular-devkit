@@ -1,0 +1,34 @@
+html,
+body {
+  margin: 0;
+  height: 100vh;
+}
+
+body {
+  background-color: var(--background-color);
+  font-family: var(--font-family);
+  font-size: var(--font-size);
+  color: var(--text-color);
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+main {
+  display: block;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  pointer-events: all;
+  opacity: 0;
+  transition: opacity 0.5s ease-in;
+
+  &.is-loaded {
+    opacity: 1;
+  }
+
+  &.disable-interact {
+    pointer-events: none;
+  }
+}

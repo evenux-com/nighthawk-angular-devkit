@@ -1,0 +1,28 @@
+@import 'swiper/css/bundle';
+
+:root {
+  --swiper-navigation-sides-offset: -36px;
+}
+
+.swiper-slide {
+  cursor: -webkit-grab;
+  cursor: grab;
+
+  &:active {
+    cursor: grabbing;
+  }
+}
+
+.swiper-button-prev:after,
+.swiper-button-next:after {
+  color: var(--white-color);
+  font-size: 21px;
+}
+
+.swiper-pagination-bullet {
+  background-color: #ffffff;
+
+  &.swiper-pagination-bullet-active {
+    background-color: var(--white-color);
+  }
+}

@@ -1,0 +1,40 @@
+.pagination,
+.page-numbers {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0px;
+}
+
+.btn-nav,
+.btn-page {
+  border-radius: 50%;
+  cursor: pointer;
+  text-align: center;
+}
+
+.btn-nav {
+  padding: 8px;
+}
+
+.btn-nav {
+  width: 42px;
+  height: 42px;
+}
+
+.btn-nav:hover,
+.btn-page:hover {
+  // ...
+}
+
+.btn-page {
+  border: none;
+  width: 36px;
+  height: 36px;
+  font-size: 16px;
+}
+
+.btn-selected {
+  background-color: var(--secondary-color);
+  // color: #fff;
+}
