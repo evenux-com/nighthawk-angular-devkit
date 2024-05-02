@@ -1,4 +1,4 @@
-@import 'swiper/css/bundle';
+@import "swiper/css/bundle";
 
 :root {
   --swiper-navigation-sides-offset: -36px;
@@ -15,8 +15,8 @@
 
 .swiper-button-prev:after,
 .swiper-button-next:after {
-  color: var(--white-color);
-  font-size: 21px;
+  color: var(--swiper-navgiation-sides-color);
+  font-size: var(--swiper-navigation-sides-font-size);
 }
 
 .swiper-pagination-bullet {

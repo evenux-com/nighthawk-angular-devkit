@@ -1,15 +1,7 @@
 // 3rd party
 @import "@angular/cdk/overlay-prebuilt.css";
 
-// Core
-@import "variables";
-@import "button";
-@import "document";
-@import "form";
-@import "dialog";
-@import "swiper";
-
-// bootstrip
+// Bootstrip
 @import "bootstrip/functions";
 @import "bootstrip/variables";
 @import "bootstrip/variables-dark"; // TODO: Remove when Bootstrap 6 is released
@@ -24,3 +16,11 @@
 @import "bootstrip/grid";
 @import "bootstrip/helpers";
 @import "bootstrip/utilities/api";
+
+// Core
+@import "variables";
+@import "button";
+@import "document";
+@import "form";
+@import "dialog";
+@import "swiper";
