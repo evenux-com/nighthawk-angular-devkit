@@ -1,3 +1,6 @@
+// Reset
+@import "reset";
+
 // 3rd party
 @import "@angular/cdk/overlay-prebuilt.css";
 
@@ -5,8 +8,8 @@
 @import "bootstrip/functions";
 @import "bootstrip/variables";
 @import "bootstrip/variables-dark"; // TODO: Remove when Bootstrap 6 is released
-@import "bootstrip/maps";
 @import "bootstrip/mixins";
+@import "bootstrip/maps";
 @import "bootstrip/root";
 @import "bootstrip/utilities";
 @import "bootstrip/reboot";

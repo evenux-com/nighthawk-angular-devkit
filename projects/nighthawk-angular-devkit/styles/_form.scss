@@ -1,7 +1,7 @@
 .form-control {
   background-color: var(--transparent-form-control-background-color);
-  border: var(--form-control-border-width) solid var(--transparent-form-control-border-color);
-  border-radius: 6px;
+  border: var(--form-control-border-width) solid
+    var(--transparent-form-control-border-color);
   display: block;
   padding-top: var(--lg-form-control-y-padding);
   padding-bottom: var(--lg-form-control-y-padding);
@@ -204,7 +204,7 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 
-input[type='number'] {
+input[type="number"] {
   -moz-appearance: textfield;
 }
 

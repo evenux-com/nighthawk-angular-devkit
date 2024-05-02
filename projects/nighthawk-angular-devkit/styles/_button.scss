@@ -65,7 +65,7 @@
   }
 
   &.btn-bordered {
-    border-radius: var(-button-border-radius);
+    border-radius: var(--button-border-radius);
     border-width: var(--button-border-width);
   }
 

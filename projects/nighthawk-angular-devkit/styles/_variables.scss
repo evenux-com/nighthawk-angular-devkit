@@ -9,8 +9,7 @@
   --loader-color: #000000;
   --background-color: #f1f1f1;
   --text-color: #000000;
-  --background-image: url("/assets/images/default-background.jpg"),
-    url("/nighthawk-angular-devkit/assets/images/default-background.jpg");
+  --background-image: intial;
 
   // Breakpoints
   --mobile-max-width: 576px;
@@ -31,7 +30,7 @@
   --lg-button-x-padding: 36px;
   --lg-button-y-padding: 18px;
   --md-button-x-padding: 24px;
-  --md-button-y-padding: 14px;
+  --md-button-y-padding: 16px;
   --sm-button-x-padding: 12px;
   --sm-button-y-padding: 8px;
 
