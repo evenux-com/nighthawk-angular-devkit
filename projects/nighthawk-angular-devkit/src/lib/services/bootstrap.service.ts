@@ -1,245 +1,157 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   ComponentRef,
-  Injectable,
-  ViewContainerRef,
   Inject,
+  Injectable,
   PLATFORM_ID,
+  ViewContainerRef,
 } from '@angular/core';
-import { BehaviorSubject, fromEvent, take } from 'rxjs';
 import { NighthawkLoaderComponent } from '../../public-api';
 import { isPlatformBrowser } from '@angular/common';
-import { NavigationStart, Router } from '@angular/router';
 import { ApplicationConfig } from '../interfaces/application-config.interface';
+import { NavigationEnd, NavigationStart, Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class NighthawkBootstrapService {
-  public isLoaded: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  // Config
+  public config!: ApplicationConfig;
 
+  // Loader
   private loaderRef!: ComponentRef<NighthawkLoaderComponent>;
+
+  // Hook checks
+  private isBackgroundImagesLoaded: boolean = false;
+  private isImagesLoaded: boolean = false;
   private isFontsLoaded = false;
-  private isImagesLoaded = false;
+
+  // Initial fonts
   private fonts = ['a-12', 'swiper-icons'];
 
-  public minimumPageLoadingTime = 500;
-  public minimumRouteSwitchLoadingTime = 1000;
+  // Timer
+  private startTime: number = 0;
 
+  // Sanity check
+  private isFirstLoad: boolean = true;
   private isBrowser: boolean = false;
 
   constructor(
+    @Inject(PLATFORM_ID) private readonly platformId: Object,
     private readonly vcr: ViewContainerRef,
-    private readonly router: Router,
-    @Inject(PLATFORM_ID) private readonly platformId: any
+    private readonly router: Router
   ) {
-    this.isBrowser = isPlatformBrowser(platformId);
+    this.isBrowser = isPlatformBrowser(this.platformId);
 
     if (this.isBrowser) {
-      const element = document.querySelector(':root') || false;
-      if (element) {
-        const computedStyle = window.getComputedStyle(element);
-        this.minimumRouteSwitchLoadingTime = +computedStyle.getPropertyValue(
-          '--minimum-route-switch-loading-time'
-        );
-        this.minimumPageLoadingTime = +computedStyle.getPropertyValue(
-          '--minimum-page-loading-time'
-        );
-      }
+      this.router.events.subscribe((event) => {
+        if ((event as any).navigationTrigger !== 'popstate') {
+          if (this.config.routeLoaderEnabled && !this.isFirstLoad) {
+            if (event instanceof NavigationStart) {
+              // Reset cache
+              this.isBackgroundImagesLoaded = false;
+              this.isImagesLoaded = false;
+              this.isFontsLoaded = false;
 
-      router.events.subscribe(async (event) => {
-        if (
-          this.isBrowser &&
-          event instanceof NavigationStart &&
-          event.navigationTrigger !== 'popstate' &&
-          this.isLoaded.value &&
-          this.minimumRouteSwitchLoadingTime >= 1000
-        ) {
-          this.isImagesLoaded = false;
-          this.isFontsLoaded = false;
+              // Reset timer
+              this.startTime = Date.now();
 
-          this.placeFontsHook();
-          this.placeImageLoaderHook();
+              // Place hooks
+              this.placeBackgroundImageLoaderHook();
+              this.placeImageLoaderHook();
+              this.placeFontsHook();
 
-          const startTime = Date.now();
-          await this.loadRouteChangeBackground(startTime);
-          this.initializeRouteLoader();
+              // Show loader
+              this.showLoaderWithFadeIn();
+
+              if (!this.config.manualLoader) {
+                // Start finalization hook
+                this.checkForFinalization();
+              }
+            }
+          }
         }
       });
     }
   }
 
   public async loadApplication(config: ApplicationConfig): Promise<void> {
+    this.config = config;
     this.fonts.push(...config.fonts);
 
-    if (this.isBrowser && this.minimumPageLoadingTime >= 500) {
-      setTimeout(async () => {
+    if (this.isBrowser && config.pageLoaderEnabled) {
+      // Start timer
+      this.startTime = Date.now();
+
+      setTimeout(() => {
+        // Place hooks (timeout to wait for DOM)
+        this.placeBackgroundImageLoaderHook();
         this.placeImageLoaderHook();
         this.placeFontsHook();
-        this.initializePageLoader();
-        const startTime = Date.now();
-        await this.loadBackground(startTime);
       });
-    } else if (this.isBrowser) {
-      const mainElement = document.querySelector('main');
-      if (mainElement) mainElement.classList.add('is-loaded');
+
+      // Show loader
+      this.showLoader();
+
+      if (!config.manualLoader) {
+        // Start finalization hook
+        this.checkForFinalization();
+      }
     }
   }
 
-  private initializePageLoader(): void {
-    const mainElement = document.querySelector('main');
-    if (mainElement) mainElement.classList.add('disable-interact');
+  public pageLoaded(): void {
+    this.checkForFinalization();
+  }
 
+  private showLoader(): void {
     this.loaderRef = this.vcr.createComponent(NighthawkLoaderComponent);
     this.loaderRef.setInput('isPageLoader', true);
     this.loaderRef.setInput('size', 42);
     this.loaderRef.setInput('ready', true);
   }
 
-  private initializeRouteLoader(): void {
-    const mainElement = document.querySelector('main');
-    if (mainElement) mainElement.classList.add('disable-interact');
-
+  private showLoaderWithFadeIn(): void {
     this.loaderRef = this.vcr.createComponent(NighthawkLoaderComponent);
     this.loaderRef.setInput('isPageLoader', true);
     this.loaderRef.setInput('size', 42);
+    this.loaderRef.setInput('ready', true);
     this.loaderRef.setInput('isHidden', true);
 
     setTimeout(() => {
-      this.loaderRef.setInput('ready', true);
-
-      setTimeout(() => {
-        this.loaderRef.setInput('isHidden', false);
-      }, 100);
-    }, 650);
-  }
-
-  private async loadBackground(
-    startTime: number,
-    isRetry?: boolean
-  ): Promise<void> {
-    if (this.isBrowser) {
-      const finalize = () => {
-        const mainElement = document.querySelector('main');
-        mainElement?.classList.add('is-loaded');
-        this.loaderRef.setInput('isHidden', true);
-
-        setTimeout(() => {
-          this.loaderRef.destroy();
-          this.isLoaded.next(true);
-          mainElement?.classList.remove('disable-interact');
-        }, 650);
-      };
-
-      const element = document.querySelector(':root');
-
-      if (element) {
-        if (isRetry) {
-          const timeItTookToLoad = Date.now() - startTime;
-          const isPastMinimumTime =
-            timeItTookToLoad >= this.minimumPageLoadingTime;
-
-          if (isPastMinimumTime && this.isImagesLoaded && this.isFontsLoaded) {
-            finalize();
-            return;
-          } else {
-            setTimeout(async () => {
-              await this.loadBackground(startTime, true);
-            }, 100);
-
-            return;
-          }
-        }
-
-        const backgroundVarValue =
-          getComputedStyle(element).getPropertyValue('--background-image');
-        const urlRegex = /\((.*?)\)/g;
-        const images = Array.from(
-          backgroundVarValue.matchAll(urlRegex),
-          (m) => m[1]
-        );
-
-        const responses = await Promise.all(
-          images.map((image) =>
-            fetch(new URL(image, window.location.href).toString())
-          )
-        );
-        const validUrls = images.filter((_, i) => responses[i].status !== 404);
-
-        const observables = validUrls.map(() =>
-          fromEvent(new Image(), 'load').pipe(take(1))
-        );
-
-        await Promise.all(observables).then(() => {
-          const endTime = Date.now();
-          const timeItTookToLoad = endTime - startTime;
-          const isPastMinimumTime =
-            timeItTookToLoad >= this.minimumPageLoadingTime;
-
-          if (isPastMinimumTime && this.isImagesLoaded && this.isFontsLoaded) {
-            finalize();
-            return;
-          } else {
-            setTimeout(async () => {
-              await this.loadBackground(startTime, true);
-            }, 100);
-          }
-        });
-      }
-    }
-  }
-
-  private async loadRouteChangeBackground(
-    startTime: number,
-    isRetry?: boolean
-  ): Promise<void> {
-    const finalize = () => {
+      // Make main element visible
       const mainElement = document.querySelector('main');
-      mainElement?.classList.add('is-loaded');
-      this.loaderRef.instance.isHidden = true;
+      if (mainElement) mainElement.classList.remove('is-loaded');
 
+      this.loaderRef.setInput('isHidden', false);
+    });
+  }
+
+  private checkForFinalization(): void {
+    const timePassed = Date.now() - this.startTime;
+
+    if (
+      // Check if hooks finished & min loading time hit
+      this.isBackgroundImagesLoaded &&
+      this.isImagesLoaded &&
+      this.isFontsLoaded &&
+      timePassed >= this.config.minimumLoaderTime
+    ) {
+      // Make main element visible
+      const mainElement = document.querySelector('main');
+      if (mainElement) mainElement.classList.add('is-loaded');
+
+      // Hide the loader (650ms animation)
+      this.loaderRef.setInput('isHidden', true);
+
+      // Wait for animation before destroying
       setTimeout(() => {
         this.loaderRef.destroy();
-        mainElement?.classList.remove('disable-interact');
+        this.isFirstLoad = false;
       }, 650);
-
-      return;
-    };
-
-    if (isRetry) {
-      const timeItTookToLoad = Date.now() - startTime;
-      const isPastMinimumTime =
-        timeItTookToLoad >= this.minimumRouteSwitchLoadingTime;
-
-      if (isPastMinimumTime && this.isImagesLoaded && this.isFontsLoaded) {
-        finalize();
-      } else {
-        setTimeout(async () => {
-          await this.loadRouteChangeBackground(startTime, true);
-        }, 100);
-      }
-
-      return;
-    }
-
-    if (this.isBrowser) {
-      const mainElement = document.querySelector('main');
-      mainElement?.classList.remove('is-loaded');
-
+    } else {
       setTimeout(() => {
-        const endTime = Date.now();
-        const timeItTookToLoad = endTime - startTime;
-        const isPastMinimumTime =
-          timeItTookToLoad >= this.minimumRouteSwitchLoadingTime;
-
-        if (isPastMinimumTime && this.isImagesLoaded && this.isFontsLoaded) {
-          finalize();
-        } else {
-          setTimeout(async () => {
-            await this.loadRouteChangeBackground(startTime, true);
-          }, 100);
-        }
-      });
+        this.checkForFinalization();
+      }, 100);
     }
   }
 
@@ -257,6 +169,34 @@ export class NighthawkBootstrapService {
       };
 
       checkImageLoad();
+    }
+  }
+
+  private async placeBackgroundImageLoaderHook(): Promise<void> {
+    if (this.isBrowser) {
+      const urls = this.findAllBackgroundImageUrls();
+      if (!urls.length) {
+        this.isBackgroundImagesLoaded = true;
+        return;
+      }
+
+      const loadPromises = urls.map((url) => {
+        return new Promise<void>((resolve, reject) => {
+          const img = new Image();
+          img.onload = () => resolve();
+          img.onerror = () => reject(new Error(`Failed to load image: ${url}`));
+          img.src = url;
+        });
+      });
+
+      Promise.all(loadPromises)
+        .then(() => {
+          this.isBackgroundImagesLoaded = true;
+        })
+        .catch((error) => {
+          console.error(error);
+          return undefined;
+        });
     }
   }
 
@@ -299,5 +239,24 @@ export class NighthawkBootstrapService {
         }
       }, 100);
     }
+  }
+
+  private findAllBackgroundImageUrls(): string[] {
+    const urls: string[] = [];
+    const allElements = document.querySelectorAll('*');
+
+    allElements.forEach((element) => {
+      const style = window.getComputedStyle(element);
+      const backgroundImage = style.getPropertyValue('background-image');
+
+      // Extract URL from `url("...")`
+      const matches = backgroundImage.match(/url\(["']?(.*?)["']?\)/);
+
+      if (matches && matches[1]) {
+        urls.push(matches[1]);
+      }
+    });
+
+    return urls;
   }
 }

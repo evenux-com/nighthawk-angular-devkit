@@ -4,6 +4,8 @@ import {
   Output,
   EventEmitter,
   AfterViewInit,
+  ChangeDetectorRef,
+  SimpleChanges,
 } from '@angular/core';
 
 @Component({
@@ -24,7 +26,13 @@ export class NighthawkPaginationComponent implements AfterViewInit {
 
   public visiblePages: number[] = [];
 
-  ngAfterViewInit(): void {
+  constructor(private readonly cdRef: ChangeDetectorRef) {}
+
+  public ngAfterViewInit(): void {
+    this.createPagination();
+  }
+  
+  public ngOnChanges(changes: SimpleChanges): void {
     this.createPagination();
   }
 
@@ -53,6 +61,7 @@ export class NighthawkPaginationComponent implements AfterViewInit {
     }
 
     this.isPaginationCreated = true;
+    this.cdRef.detectChanges();
   }
 
   public goToPage(pageNumber: number): void {

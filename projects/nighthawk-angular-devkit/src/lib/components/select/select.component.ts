@@ -19,6 +19,7 @@ import {
   ControlValueAccessor,
   FormsModule,
   ReactiveFormsModule,
+  FormControl,
 } from '@angular/forms';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -54,6 +55,7 @@ export class NighthawkSelectComponent
   @Input() hasSearch: boolean = false;
   @Input() placeholder: string = '';
   @Input() searchPlaceholder: string = '';
+  @Input() emptyResultsLabel: string = 'No results found...';
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   @Input() options: any[] = [];
   @Input() nameField: string = '';
@@ -61,10 +63,13 @@ export class NighthawkSelectComponent
   @Input() color: 'primary' | 'secondary' | 'black' | 'white' | 'transparent' =
     'primary';
   @Input() size: 'large' | 'medium' | 'small' = 'medium';
+  @Input() rounded: boolean = false;
+  @Input() controlToCheckForErrors!: any;
   @Input() isDisabled!: boolean;
 
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   @Output() onOptionSelect = new EventEmitter<string>();
+  @Output() onSearchValue = new EventEmitter<string>();
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public selectedOption: any = null;
@@ -120,8 +125,11 @@ export class NighthawkSelectComponent
       this.selectedOption =
         this.options.find((option) => option[this.valueField] === value) ||
         null;
-      if (this.selectedOption)
+      if (this.selectedOption) {
         this.selectedValue = this.selectedOption[this.nameField];
+      } else {
+        this.selectedValue = '';
+      }
     } else {
       this.selectedValue = '';
       this.selectedOption = null;
@@ -149,6 +157,7 @@ export class NighthawkSelectComponent
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public onSearch(event: any): void {
     const searchString = event.target.value;
+    this.onSearchValue.emit(searchString);
     this.filterOptions(searchString);
     if (!this.showingOptions) {
       this.showOptions();

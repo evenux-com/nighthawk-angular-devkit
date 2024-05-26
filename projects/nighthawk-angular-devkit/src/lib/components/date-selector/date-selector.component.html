@@ -1,0 +1,33 @@
+<button 
+    class="main-btn"
+    type="button" 
+    nighthawk-button
+    nighthawk-controlled-dropdown-trigger 
+    [color]="color" 
+    [size]="size" 
+    [border]="border" 
+    [rounded]="rounded" 
+    [dropdownTrigger]="calendarDropdown"
+    [isOpen]="showCalendarDropdown"
+    (click)="showCalendarDropdown = true"
+>
+    Vali kuupäev
+</button>
+
+<nighthawk-dropdown [offset]="8" #calendarDropdown>
+    <div class="row gx-2 mb-2">
+        <div class="col">
+            <nighthawk-select [(ngModel)]="selectedMonth" [hasSearch]="false" color="white" size="small" [rounded]="true" [options]="monthOptions" nameField="name" valueField="value" placeholder="Vali kuu" />
+        </div>
+        <div class="col">
+            <nighthawk-select [(ngModel)]="selectedYear" [hasSearch]="false" color="white" size="small" [rounded]="true" [options]="yearOptions" nameField="name" valueField="value" placeholder="Vali aasta" />
+        </div>
+    </div>
+    <nighthawk-calendar [month]="selectedMonth" [year]="selectedYear" (selectedDay)="onSelectDay($event)" [dayNames]="['Esmaspäev', 'Teisipäev', 'Kolmapäev', 'Neljapäev', 'Reede', 'Laupäev', 'Pühapäev']" />
+
+    <div class="w-100 text-end">
+        <button nighthawk-button type="button" color="primary" size="small" [rounded]="true" [border]="true" (click)="close()">
+            Sulge
+        </button>
+    </div>
+</nighthawk-dropdown>

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 
 @Component({
   standalone: true,
@@ -6,7 +6,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.scss'],
 })
-export class NighthawkCalendarComponent implements OnInit {
+export class NighthawkCalendarComponent implements OnInit, OnChanges {
   @Input() month: number = 1;
   @Input() year: number = 2024;
   @Input() startDayOfWeek: number = 1; // Default to Monday (0 is Sunday, 1 is Monday, and so on)
@@ -34,6 +34,12 @@ export class NighthawkCalendarComponent implements OnInit {
 
   public ngOnInit(): void {
     this.generateCalendar();
+  }
+
+  public ngOnChanges(changes: SimpleChanges): void {
+    if (changes['month'] || changes['year']) {
+      this.generateCalendar();
+    }
   }
 
   public generateCalendar(): void {

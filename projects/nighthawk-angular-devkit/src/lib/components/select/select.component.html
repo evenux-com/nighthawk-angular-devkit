@@ -4,8 +4,10 @@
       nighthawk-form-control
       [color]="color"
       [size]="size"
+      [rounded]="rounded"
       [disabled]="isDisabled"
       [ngModel]="selectedValue"
+      [controlToCheckForErrors]="controlToCheckForErrors"
       [placeholder]="
         hasSearch
           ? showingOptions
@@ -19,7 +21,7 @@
       (blur)="onBlur()"
       (keydown.enter)="selectOption()"
     />
-    <i class="icon-down-dir"></i>
+    <i class="nh-icon-down-dir"></i>
     <div
       class="click-overlay"
       [class.is-disabled]="isDisabled"
@@ -44,7 +46,7 @@
       {{ option[nameField] }}
     </a>
     } @if (!filteredOptions || !filteredOptions.length) {
-    <p>No results found...</p>
+    <p>{{ emptyResultsLabel }}</p>
     }
   </div>
 </ng-template>

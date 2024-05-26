@@ -6,6 +6,7 @@ import {
   OnInit,
   Renderer2,
 } from '@angular/core';
+import { FormControl } from '@angular/forms';
 
 @Directive({
   standalone: true,
@@ -19,6 +20,7 @@ export class NighthawkFormControlDirective implements OnInit {
   @Input() border: boolean = false;
   @Input() rounded: boolean = false;
   @Input() fullWidth: boolean = false;
+  @Input() controlToCheckForErrors!: any;
 
   @Input() set disabled(value: boolean) {
     this.isDisabled = value;
@@ -28,6 +30,14 @@ export class NighthawkFormControlDirective implements OnInit {
   @HostBinding('class') get classes(): string {
     const classes = ['form-control'];
     classes.push(`form-control-${this.size}`);
+
+    if (
+      this.controlToCheckForErrors?.invalid &&
+      (this.controlToCheckForErrors?.dirty ||
+        this.controlToCheckForErrors?.touched)
+    ) {
+      classes.push('form-control-errored');
+    }
 
     if (this.centered) {
       classes.push('form-control-centered');

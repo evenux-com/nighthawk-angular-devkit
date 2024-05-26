@@ -34,6 +34,7 @@ export class NighthawkDropdownTriggerForDirective implements OnInit, OnDestroy {
   @Input() public dropdownCloseOnClickInside: boolean = true;
   @Input() public dropdownCloseOnRouteChange: boolean = true;
   @Input() public dropdownPanelClass: string = '';
+  @Input() public disabled: boolean = false;
 
   constructor(
     private elementRef: ElementRef,
@@ -47,7 +48,7 @@ export class NighthawkDropdownTriggerForDirective implements OnInit, OnDestroy {
   }
 
   @HostListener('click', ['$event']) onClick() {
-    if (!this.isBrowser) {
+    if (!this.isBrowser || this.disabled) {
       return;
     }
 
@@ -66,7 +67,7 @@ export class NighthawkDropdownTriggerForDirective implements OnInit, OnDestroy {
   }
 
   @HostListener('mouseenter') onMouseEnter() {
-    if (!this.isBrowser) {
+    if (!this.isBrowser || this.disabled) {
       return;
     }
 

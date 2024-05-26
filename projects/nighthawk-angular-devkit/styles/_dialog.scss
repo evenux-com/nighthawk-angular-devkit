@@ -1,3 +1,5 @@
+@import "../styles/mixins";
+
 .cdk-overlay-dark-backdrop {
   backdrop-filter: blur(5px);
 }
@@ -27,6 +29,10 @@
   border: 2px solid var(--dialog-border-color);
   max-height: calc(100vh - 100px);
   overflow-y: auto;
+
+  @include media-breakpoint-down(lg) {
+    padding: 16px;
+  }
 }
 
 .login-dialog .dialog-content {

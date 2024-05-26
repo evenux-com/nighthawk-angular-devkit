@@ -10,6 +10,12 @@
     "./styles/bootstrip/helpers/*.scss",
     "./styles/bootstrip/mixins/*.scss",
     "./styles/bootstrip/utilities/*.scss",
-    "./styles/bootstrip/vendor/*.scss"
+    "./styles/bootstrip/vendor/*.scss",
+    "./src/assets/css/*.css",
+    "./src/assets/font/*.eot",
+    "./src/assets/font/*.svg",
+    "./src/assets/font/*.ttf",
+    "./src/assets/font/*.woff",
+    "./src/assets/font/*.woff2"
   ]
 }

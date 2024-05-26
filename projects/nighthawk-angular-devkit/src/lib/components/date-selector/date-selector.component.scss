@@ -1,0 +1,44 @@
+.main-btn {
+    min-width: 320px;
+}
+
+::ng-deep {
+    .dropdown-content { 
+        max-width: 320px !important;
+        width: 100% !important;
+        padding: 12px;
+    }
+
+    .calendar {
+        .header {
+            padding: 8px 0 !important;
+            border-radius: 10px !important;
+
+            .day {
+                font-size: 0;
+
+                &::first-letter {
+                    font-size: 12px !important;
+                }
+            }
+        }
+
+        .weeks {
+            justify-content: space-between;
+            margin-bottom: 8px;
+            padding: 0 !important;
+
+            .day {
+                margin: 0 !important;
+                border: none !important;
+                padding: 6px 0 !important;
+                border-radius: 10px !important;
+
+                .number {
+                    font-size: 12px !important;
+                    line-height: 12px !important;
+                }
+            }
+        }
+    }
+}

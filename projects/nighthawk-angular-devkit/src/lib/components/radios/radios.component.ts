@@ -31,6 +31,8 @@ export class NighthawkRadiosComponent implements ControlValueAccessor {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   @Input() options: { label: string; value: any; disabled?: boolean }[] = [];
 
+  @Input() disabled: boolean = false;
+
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix, @typescript-eslint/no-explicit-any
   @Output() onValueChange: EventEmitter<any> = new EventEmitter<any>();
 

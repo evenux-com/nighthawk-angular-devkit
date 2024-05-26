@@ -8,11 +8,11 @@ import { NighthawkNotificationComponent } from '../components/notification/notif
 export class NighthawkNotificationService {
   constructor(private readonly dialog: Dialog) {}
 
-  public show(title: string, text: string): void {
+  public show(title: string, text: string, closeText: string): void {
     this.dialog.open(NighthawkNotificationComponent, {
       disableClose: true,
       closeOnNavigation: true,
-      data: { title: title, text: text },
+      data: { title: title, text: text, closeText: closeText },
     });
   }
 }
