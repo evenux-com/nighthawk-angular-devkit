@@ -10,17 +10,23 @@
     [dropdownTrigger]="calendarDropdown"
     [isOpen]="showCalendarDropdown"
     (click)="showCalendarDropdown = true"
+    [ngClass]="buttonClasses"
 >
-    Vali kuupäev
+    <span *ngIf="!selectedDate">
+        {{buttonSelectDateText}}
+    </span>
+    <span *ngIf="selectedDate">
+        {{ selectedDate | date : dateFormatExpression}}
+    </span>
 </button>
 
 <nighthawk-dropdown [offset]="8" #calendarDropdown>
     <div class="row gx-2 mb-2">
         <div class="col">
-            <nighthawk-select [(ngModel)]="selectedMonth" [hasSearch]="false" color="white" size="small" [rounded]="true" [options]="monthOptions" nameField="name" valueField="value" placeholder="Vali kuu" />
+            <nighthawk-select [(ngModel)]="selectedMonth" [hasSearch]="false" color="white" size="small" [rounded]="true" [options]="monthOptions" nameField="name" valueField="value" [placeholder]="buttonSelectMonthText" />
         </div>
         <div class="col">
-            <nighthawk-select [(ngModel)]="selectedYear" [hasSearch]="false" color="white" size="small" [rounded]="true" [options]="yearOptions" nameField="name" valueField="value" placeholder="Vali aasta" />
+            <nighthawk-select [(ngModel)]="selectedYear" [hasSearch]="false" color="white" size="small" [rounded]="true" [options]="yearOptions" nameField="name" valueField="value" [placeholder]="buttonSelectYearText" />
         </div>
     </div>
     <nighthawk-calendar [month]="selectedMonth" [year]="selectedYear" (selectedDay)="onSelectDay($event)" [dayNames]="['Esmaspäev', 'Teisipäev', 'Kolmapäev', 'Neljapäev', 'Reede', 'Laupäev', 'Pühapäev']" />
